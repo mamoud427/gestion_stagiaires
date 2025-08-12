@@ -61,7 +61,6 @@ const Login: React.FC = () => {
 
                 </div>
                 
-
                 <button type="submit">Se connecter</button>
             </form>
         </div> 

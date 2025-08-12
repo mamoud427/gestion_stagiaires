@@ -1,14 +1,15 @@
 import React from "react";
 
-interface Encadreur {
+interface Stagiaire {
   _id: string;
   nom: string;
   prenom: string;
   email: string;
-  password: string;
   telephone: string;
-  poste: string;
-  role: boolean;
+  theme: string;
+  dateDebut: string;
+  dateFin: string;
+  encadrant: string;
 }
 
 interface ModalProps {

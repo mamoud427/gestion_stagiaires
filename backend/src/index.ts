@@ -6,7 +6,9 @@ import express  from "express";
 import mongoose from "mongoose";
 import cors from "cors";
 
-import stagiaireRoutes from "./routes/stagiaire.routes";
+// les différennts routes
+import stagiaireRoutes from "./routes/Stagiaire.routes";
+import encadrantRoutes from "./routes/Encadrant.routes";
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -17,12 +19,17 @@ app.use(cors({
     credentials: true,
 }));
 app.use(express.json());
-app.use('/api/stagiaires', stagiaireRoutes);
 
 //routes
+app.use('/api/stagiaires', stagiaireRoutes);
+app.use('/api/encadrant', encadrantRoutes);
+
+// routes de test
 app.get("/", (req, res) => {
   res.send("Welcome to the backend!");
 });
+
+
 
 //DB + Server
 mongoose

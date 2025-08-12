@@ -33,7 +33,7 @@ const Login: React.FC = () => {
     return (
        <div className="login-container">
             <img src={Logo} alt="" />
-            <h2>Connexion Administrateur</h2>
+            <h2>Authentification</h2>
             {/* {error && <p className="error">{error}</p>} */}
             <form onSubmit={handleSubmit}>
                 <label>Email :</label>

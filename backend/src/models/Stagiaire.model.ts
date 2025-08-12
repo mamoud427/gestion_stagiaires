@@ -1,6 +1,21 @@
-import mongoose from "mongoose";
+import mongoose, {Document, Schema} from "mongoose";
 
-const stagiaireSchema = new mongoose.Schema(
+// interface Typescript d'un stagiaire
+export interface IStagiaire extends  Document {
+    nom: String,
+    prenom: String,
+    email: String,
+    telephone: String,
+    theme: String,
+    dateDebut: Date,
+    dateFin: Date,
+    encadrant: String,
+    createAt?: Date;
+    updatedAt?: Date;
+}
+
+// Schema Mongoose d'un stagiaire
+const StagiaireSchema: Schema<IStagiaire> = new Schema(
     {
         nom: {type: String, required: true},
         prenom: {type: String, required: true},
@@ -16,4 +31,4 @@ const stagiaireSchema = new mongoose.Schema(
     }
 );
 
-export const Stagiaire = mongoose.model("Stagiaire", stagiaireSchema);
+export const StagiaireModel = mongoose.model("Stagiaire", StagiaireSchema);

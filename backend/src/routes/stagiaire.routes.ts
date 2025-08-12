@@ -1,11 +1,16 @@
 import express from 'express';
-import { createStagiaires, getStagiaires } from '../controllers/stagiaire.controller';
+import { StagiaireController } from '../controllers/Stagiaire.controller';
 
 const router = express.Router();
 
-router.get('/', getStagiaires);
-router.post('/create', createStagiaires);
-// router.put('/:id', );
-// router.delete('/:id', );
+const controller = StagiaireController;
+
+// Routes pour les stagiaires
+
+router.post('/create', controller.createStagiaire);
+router.get('/', controller.getAll);
+router.get('/:id', controller.getById);
+router.put('/:id', controller.update);
+router.delete('/:id', controller.delete);
 
 export default router;

@@ -4,20 +4,18 @@ import { Pen, Trash, Eye, Plus } from "lucide-react";
 import api from "../services/api";
 import "../style/liste.css";
 import "../style/form_ajout.css";
-import { format } from "date-fns";
-import FormulaireAjout from "../components/formulaire_ajout";
-import ModalStagiaire from "../components/ModalStagiaires";
+import FormulaireAjout from "../components/formulaire_ajout_encadreur";
+import ModalEncadreur from "../components/ModalEncadreur";
 
-interface Stagiaire {
+interface Encadreur {
   _id: string;
   nom: string;
   prenom: string;
   email: string;
+  password: string;
   telephone: string;
-  theme: string;
-  dateDebut: string;
-  dateFin: string;
-  encadrant: string;
+  poste: string;
+  role: boolean;
 }
 
 const customStyles = {
@@ -30,63 +28,63 @@ const customStyles = {
   },
 };
 
-export default function Stagiaires() {
-  const [stagiaires, setStagiaires] = useState<Stagiaire[]>([]);
-  const [records, setRecords] = useState<Stagiaire[]>([]);
+export default function Encadreurs() {
+  const [encadreurs, setEncadreurs] = useState<Encadreur[]>([]);
+  const [records, setRecords] = useState<Encadreur[]>([]);
 
   const [showAddModal, setShowAddModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
   const [showViewModal, setShowViewModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
 
-  const [selectedStagiaire, setSelectedStagiaire] = useState<Stagiaire | null>(null);
+  const [selectedEncadreur, setSelectedEncadreur] = useState<Encadreur | null>(null);
 
-  // Charger les stagiaires
-  const fetchStagiaires = async () => {
+  // Charger les Encadreurs
+  const fetchEncadreurs = async () => {
     try {
-      const res = await api.get("/stagiaires");
-      setStagiaires(res.data);
+      const res = await api.get("/encadreurs");
+      setEncadreurs(res.data);
     } catch (error) {
-      console.error("Erreur fetch stagiaires", error);
+      console.error("Erreur fetch Encadreurs", error);
     }
   };
 
   useEffect(() => {
-    fetchStagiaires();
+    fetchEncadreurs();
   }, []);
 
   useEffect(() => {
-    setRecords(stagiaires);
-  }, [stagiaires]);
+    setRecords(encadreurs);
+  }, [encadreurs]);
 
   // Recherche
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const query = e.target.value.toLowerCase().trim();
-    const filtered = stagiaires.filter((s) =>
+    const filtered = encadreurs.filter((s) =>
       s.nom.toLowerCase().includes(query)
     );
     setRecords(filtered);
   };
 
-  // Ajouter
-  const handleAdd = async (data: Stagiaire) => {
-    try {
-      await api.post("/stagiaires", data);
-      setShowAddModal(false);
-      fetchStagiaires();
-    } catch (error) {
-      console.error("Erreur ajout", error);
-    }
-  };
+  // // Ajouter
+  // const handleAdd = async (data: Encadreur) => {
+  //   try {
+  //     await api.post("/encadreurs", data);
+  //     setShowAddModal(false);
+  //     fetchEncadreurs();
+  //   } catch (error) {
+  //     console.error("Erreur ajout", error);
+  //   }
+  // };
 
   // Modifier
-  const handleEdit = async (data: Stagiaire) => {
-    if (!selectedStagiaire) return;
+  const handleEdit = async (data: Encadreur) => {
+    if (!selectedEncadreur) return;
     try {
-      await api.put(`/stagiaires/${selectedStagiaire._id}`, data);
+      await api.put(`/encadreurs/${selectedEncadreur._id}`, data);
       setShowEditModal(false);
-      setSelectedStagiaire(null);
-      fetchStagiaires();
+      setSelectedEncadreur(null);
+      fetchEncadreurs();
     } catch (error) {
       console.error("Erreur modification", error);
     }
@@ -94,39 +92,33 @@ export default function Stagiaires() {
 
   // Supprimer
   const handleDelete = async () => {
-    if (!selectedStagiaire) return;
+    if (!selectedEncadreur) return;
     try {
-      await api.delete(`/stagiaires/${selectedStagiaire._id}`);
+      await api.delete(`/encadreurs/${selectedEncadreur._id}`);
       setShowDeleteModal(false);
-      setSelectedStagiaire(null);
-      fetchStagiaires();
+      setSelectedEncadreur(null);
+      fetchEncadreurs();
     } catch (error) {
       console.error("Erreur suppression", error);
     }
   };
 
   const columns = [
-    { name: "N°", cell: (row: Stagiaire, index: number) => index + 1, sortable: true },
-    { name: "Nom", selector: (row: Stagiaire) => row.nom, sortable: true },
-    { name: "Prénom", selector: (row: Stagiaire) => row.prenom, sortable: true },
-    { name: "Email", selector: (row: Stagiaire) => row.email },
-    {
-      name: "Date début",
-      cell: (row: Stagiaire) => format(new Date(row.dateDebut), "dd/MM/yyyy"),
-    },
-    {
-      name: "Date fin",
-      cell: (row: Stagiaire) => format(new Date(row.dateFin), "dd/MM/yyyy"),
-    },
-
+    { name: "N°", cell: (row: Encadreur, index: number) => index + 1, sortable: true },
+    { name: "Nom", selector: (row: Encadreur) => row.nom, sortable: true },
+    { name: "Prénom", selector: (row: Encadreur) => row.prenom, sortable: true },
+    { name: "Email", selector: (row: Encadreur) => row.email },
+    { name: "Mot de Passe", selector: (row: Encadreur) => row.password },
+    { name: "Téléphone", selector: (row: Encadreur) => row.telephone },
+    { name: "Role", selector: (row: Encadreur) => row.role },
     {
       name: "Actions",
-      cell: (row: Stagiaire) => (
+      cell: (row: Encadreur) => (
         <div className="flex gap-2">
           <span
             className="btn-info cursor-pointer"
             onClick={() => {
-              setSelectedStagiaire(row);
+              setSelectedEncadreur(row);
               setShowViewModal(true);
             }}
             title="Voir"
@@ -136,7 +128,7 @@ export default function Stagiaires() {
           <span
             className="btn-edit cursor-pointer"
             onClick={() => {
-              setSelectedStagiaire(row);
+              setSelectedEncadreur(row);
               setShowEditModal(true);
             }}
             title="Modifier"
@@ -146,7 +138,7 @@ export default function Stagiaires() {
           <span
             className="btn-delete cursor-pointer"
             onClick={() => {
-              setSelectedStagiaire(row);
+              setSelectedEncadreur(row);
               setShowDeleteModal(true);
             }}
             title="Supprimer"
@@ -161,19 +153,19 @@ export default function Stagiaires() {
   return (
     <div className="datatable">
       <div className="p-4">
-        <h2 className="text-2xl font-bold mb-4">Liste des stagiaires</h2>
+        <h2 className="text-2xl font-bold mb-4">Liste des encadreurs</h2>
 
         <button
           onClick={() => setShowAddModal(true)}
           className="btn-add mb-4 flex items-center gap-2 px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700"
         >
-          <Plus size={16} /> Ajouter un stagiaire
+          <Plus size={16} /> Ajouter un Encadreur
         </button>
 
         <div className="search mb-4">
           <input
             type="text"
-            placeholder="Rechercher un stagiaire"
+            placeholder="Rechercher un Encadreur"
             onChange={handleChange}
           />
         </div>
@@ -206,7 +198,7 @@ export default function Stagiaires() {
 
 
       {/* Modal Modifier */}
-      {showEditModal && selectedStagiaire && (
+      {showEditModal && selectedEncadreur && (
         <div className="editModal modal-overlay" onClick={() => setShowEditModal(false)}>
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
             <button
@@ -217,27 +209,26 @@ export default function Stagiaires() {
               ✕
             </button>
             <FormulaireAjout
-              // ⬇ On passe l'objet du stagiaire sélectionné comme données initiales
-              initialData={selectedStagiaire}
-              // ⬇ On passe la fonction de mise à jour existante
+              initialData={selectedEncadreur}
               onSubmit={handleEdit}
-              // ⬇ On passe la fonction pour fermer la modale
-              onClose={() => setShowEditModal(false)}
+              onClose={() => {
+                setShowEditModal(false);
+                setSelectedEncadreur(null);
+              }}
             />
           </div>
         </div>
       )}
 
-
       {/* Modal Voir */}
-      {showViewModal && selectedStagiaire && (
+      {showViewModal && selectedEncadreur && (
         <div className=" modal-overlay" onClick={() => setShowViewModal(false)}>
           <div className="infoModal modal-content" onClick={(e) => e.stopPropagation()}>
-            <ModalStagiaire
-              stagiaire={selectedStagiaire}
+            <ModalEncadreur
+              encadreur={selectedEncadreur}
               onClose={() => {
                 setShowViewModal(false);
-                setSelectedStagiaire(null);
+                setSelectedEncadreur(null);
               }}
             />
           </div>
@@ -245,7 +236,7 @@ export default function Stagiaires() {
       )}
 
       {/* Modal Supprimer */}
-      {showDeleteModal && selectedStagiaire && (
+      {showDeleteModal && selectedEncadreur && (
         <div className="modal-overlay" onClick={() => setShowDeleteModal(false)}>
           <div className="deleteModal" onClick={(e) => e.stopPropagation()}>
             <button
@@ -259,7 +250,7 @@ export default function Stagiaires() {
             <p className="mb-4">
               Voulez-vous vraiment supprimer{" "}
               <strong>
-                {selectedStagiaire.nom} {selectedStagiaire.prenom}
+                {selectedEncadreur.nom} {selectedEncadreur.prenom}
               </strong>
               ?
             </p>

@@ -1,0 +1,122 @@
+/* La datatable */
+
+.datatable{
+    padding: 0.5rem 5rem;
+    margin-left: 20px;
+    margin-right: 20px;   
+}
+/* Les boutons des actions du tableaux */
+.btn-add{
+    width: 200px;
+    align-items: center;
+    position: relative;
+    right: 0px;
+    left: 80%;
+
+}
+
+.search{
+    display: flex;
+    justify-content: baseline;
+    align-items: center;
+    margin: 5px;
+}
+
+.search input{
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-sizing: border-box;
+    font-size: 16px;
+    background-color: #f9f9f9;
+    margin-bottom: 10px;
+    transition: border 0.2s ease-in-out;
+}
+.btn-info{
+    color: blue;
+    margin: 5px;
+}
+
+.btn-info:hover{
+    color: rgb(11, 130, 170);
+}
+
+.btn-delete{
+    color: red;
+    margin: 5px;
+}
+
+.btn-delete:hover{
+    color: rgb(212, 68, 68);
+}
+
+
+.btn-edit{
+    color:green;
+    margin: 5px;
+}
+
+.btn-edit:hover{
+    color: rgb(25, 160, 25);
+}
+
+/* pour ls modals */
+/* modal d'ajout */
+/* Fond sombre qui couvre tout l'écran */
+.modal-overlay {
+  position: fixed;
+  inset: 0; /* top:0, right:0, bottom:0, left:0 */
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999; /* Au-dessus de tout */
+}
+
+/* Contenu de la modale */
+.modal-content {
+  background: white;
+  padding: 2rem;
+  border-radius: 8px;
+  max-width: 600px;
+  width: 100%;
+}
+
+.deleteModal{
+  max-width: 400px;
+  margin: 50px auto;
+  padding: 30px;
+  background-color: #d8faf7;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 121, 107, 0.3);
+  text-align: center;
+  font-family: 'Segoe UI', sans-serif;
+  top: 0;
+  z-index: 1000;
+}
+
+.deleteModal .btnExit{
+    width: 50px;
+    align-items: center;
+    position: relative;
+    left: 190px;
+    bottom: 40px;
+}
+.Boutonsdelete{
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+.addModal .btnExit,
+.editModal .btnExit{
+    width: 50px;
+    align-items: center;
+    position: relative;
+    left: 550px;
+}
+.infoModal .btnExit{
+    width: 50px;
+    align-items: center;
+    position: relative;
+    left: 570px;
+}

@@ -1,0 +1,94 @@
+/* La datatable */
+
+.datatable{
+    padding: 0.5rem 5rem;
+    margin-left: 20px;
+    margin-right: 20px;   
+}
+/* Les boutons des actions du tableaux */
+.btn-add{
+    width: 250px;
+    align-items: center;
+    position: relative;
+    right: 0px;
+    left: 80%;
+
+}
+
+.search{
+    display: flex;
+    justify-content: baseline;
+    align-items: center;
+    margin: 5px;
+}
+
+.search input{
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-sizing: border-box;
+    font-size: 16px;
+    background-color: #f9f9f9;
+    margin-bottom: 10px;
+    transition: border 0.2s ease-in-out;
+}
+.btn-info{
+    color: blue;
+    margin: 5px;
+}
+
+.btn-info:hover{
+    color: rgb(11, 130, 170);
+}
+
+.btn-delete{
+    color: red;
+    margin: 5px;
+}
+
+.btn-delete:hover{
+    color: rgb(212, 68, 68);
+}
+
+
+.btn-edit{
+    color:green;
+    margin: 5px;
+}
+
+.btn-edit:hover{
+    color: rgb(25, 160, 25);
+}
+
+/* pour ls modals */
+/* modal d'ajout */
+/* 
+.AddModal{
+    max-width: 400px;
+  margin: 50px auto;
+  padding: 30px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 121, 107, 0.3);
+  text-align: center;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.AddModal .btnExit{
+    width: 50px;
+    align-items: center;
+    position: relative;
+    left: 190px;
+    bottom: 110px;
+}
+.AddModal input{
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-sizing: border-box;
+    font-size: 16px;
+    background-color: #f9f9f9;
+    margin-bottom: 10px;
+    transition: border 0.2s ease-in-out;
+} */

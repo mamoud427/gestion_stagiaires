@@ -6,10 +6,8 @@ interface Encadreur {
   prenom: string;
   email: string;
   telephone: string;
-  theme: string;
-  dateDebut: string;
-  dateFin: string;
-  encadrant: string;
+  poste: string;
+  role: boolean;
 }
 
 interface ModalProps {
@@ -20,14 +18,14 @@ interface ModalProps {
 const ModalEncadreur: React.FC<ModalProps> = ({ encadreur, onClose }) => {
   if (!encadreur) return null;
 
-  const formatDate = (dateStr: string) => {
-    const d = new Date(dateStr);
-    if (isNaN(d.getTime())) return "-";
-    const day = d.getDate().toString().padStart(2, "0");
-    const month = (d.getMonth() + 1).toString().padStart(2, "0");
-    const year = d.getFullYear();
-    return `${day}/${month}/${year}`;
-  };
+  // const formatDate = (dateStr: string) => {
+  //   const d = new Date(dateStr);
+  //   if (isNaN(d.getTime())) return "-";
+  //   const day = d.getDate().toString().padStart(2, "0");
+  //   const month = (d.getMonth() + 1).toString().padStart(2, "0");
+  //   const year = d.getFullYear();
+  //   return `${day}/${month}/${year}`;
+  // };
 
   return (
     <div
@@ -41,7 +39,7 @@ const ModalEncadreur: React.FC<ModalProps> = ({ encadreur, onClose }) => {
         onClick={(e) => e.stopPropagation()}
       >
         <button
-          className="btnExit absolute top-3 right-3 text-gray-600 hover:text-gray-900"
+          className="btnExit absolute top-3 right-4 text-gray-600 hover:text-gray-900"
           onClick={onClose}
           aria-label="Fermer le modal"
         >
@@ -64,16 +62,10 @@ const ModalEncadreur: React.FC<ModalProps> = ({ encadreur, onClose }) => {
             <strong>Téléphone :</strong> {encadreur.telephone}
           </p>
           <p>
-            <strong>Thème :</strong> {encadreur.theme}
+            <strong>Poste :</strong> {encadreur.poste}
           </p>
           <p>
-            <strong>Date de début :</strong> {formatDate(encadreur.dateDebut)}
-          </p>
-          <p>
-            <strong>Date de fin :</strong> {formatDate(encadreur.dateFin)}
-          </p>
-          <p>
-            <strong>Encadrant :</strong> {encadreur.encadrant}
+            <strong>Rôle :</strong> {encadreur.role}
           </p>
         </div>
       </div>

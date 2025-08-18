@@ -1,0 +1,107 @@
+* { box-sizing: border-box; }
+
+.sidebar {
+  background: #1f4f49;          /* vert/bleu foncé */
+  color: #fff;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  position: sticky;
+  width: 270px;
+  display: flex;
+  flex-direction: column;
+  transition: width 0.25s ease;
+  overflow: hidden;       /* masque les labels quand fermé */
+  border-right: 1px solid rgba(255,255,255,0.1);
+}
+
+/* Largeur */
+.sidebar.open   { width: 240px; }
+.sidebar.closed { width: 72px; }
+
+/* En-tête */
+.sidebar-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  background: #18413c;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+
+.toggle-btn {
+  background: transparent;
+  border: none;
+  color: #fff;
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+  padding: 6px 8px;
+  border-radius: 8px;
+}
+.toggle-btn:hover { background: rgba(255,255,255,0.08); }
+
+.brand {
+  font-weight: 600;
+  font-size: 16px;
+  opacity: 0.95;
+}
+
+/* Sections */
+.sidebar-section { padding: 8px 6px; }
+
+/* Liste */
+.menu {
+  list-style: none;
+  margin: 0;
+  padding: 6px;
+}
+
+.menu-item {
+  margin: 4px 0;
+}
+
+.menu-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  text-decoration: none;
+  color: #e8f5f3;
+  border-radius: 10px;
+  transition: background 0.2s ease, color 0.2s ease;
+  white-space: nowrap; /* évite le retour ligne du label */
+}
+
+.menu-link:hover {
+  background: rgba(255,255,255,0.10);
+  color: #ffffff;
+}
+
+.menu-item.active .menu-link {
+  background: #2bb3a1;          /* accent vert */
+  color: #083a35;
+  font-weight: 600;
+}
+
+.menu-icon {
+  flex: 0 0 auto;               /* icône toujours visible */
+}
+
+/* Label masqué en mode fermé */
+.sidebar.closed .menu-label {
+  display: none;
+}
+
+/* Pied de sidebar */
+.sidebar-footer {
+  margin-top: auto;
+  padding: 8px 6px 14px;
+  border-top: 1px solid rgba(255,255,255,0.08);
+}
+
+/* Responsive : par défaut "fermée" sous 768px ; le bouton peut l’ouvrir */
+@media (max-width: 768px) {
+  .sidebar { width: 72px; }
+  .sidebar.open { width: 240px; }
+}

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import DataTable from "react-data-table-component";
 import { Pen, Trash, Eye, Plus } from "lucide-react";
 import api from "../services/api";
-import "../style/liste.css";
+import "../style/liste_encadreur.css";
 import "../style/form_ajout.css";
 import FormulaireAjout from "../components/formulaire_ajout_encadreur";
 import ModalEncadreur from "../components/ModalEncadreur";
@@ -42,7 +42,7 @@ export default function Encadreurs() {
   // Charger les Encadreurs
   const fetchEncadreurs = async () => {
     try {
-      const res = await api.get("/encadreurs");
+      const res = await api.get("/encadrant");
       setEncadreurs(res.data);
     } catch (error) {
       console.error("Erreur fetch Encadreurs", error);
@@ -66,22 +66,12 @@ export default function Encadreurs() {
     setRecords(filtered);
   };
 
-  // // Ajouter
-  // const handleAdd = async (data: Encadreur) => {
-  //   try {
-  //     await api.post("/encadreurs", data);
-  //     setShowAddModal(false);
-  //     fetchEncadreurs();
-  //   } catch (error) {
-  //     console.error("Erreur ajout", error);
-  //   }
-  // };
 
   // Modifier
   const handleEdit = async (data: Encadreur) => {
     if (!selectedEncadreur) return;
     try {
-      await api.put(`/encadreurs/${selectedEncadreur._id}`, data);
+      await api.put(`/encadrant/${selectedEncadreur._id}`, data);
       setShowEditModal(false);
       setSelectedEncadreur(null);
       fetchEncadreurs();
@@ -94,7 +84,7 @@ export default function Encadreurs() {
   const handleDelete = async () => {
     if (!selectedEncadreur) return;
     try {
-      await api.delete(`/encadreurs/${selectedEncadreur._id}`);
+      await api.delete(`/encadrant/${selectedEncadreur._id}`);
       setShowDeleteModal(false);
       setSelectedEncadreur(null);
       fetchEncadreurs();
@@ -108,7 +98,7 @@ export default function Encadreurs() {
     { name: "Nom", selector: (row: Encadreur) => row.nom, sortable: true },
     { name: "Prénom", selector: (row: Encadreur) => row.prenom, sortable: true },
     { name: "Email", selector: (row: Encadreur) => row.email },
-    { name: "Mot de Passe", selector: (row: Encadreur) => row.password },
+    // { name: "Mot de Passe", selector: (row: Encadreur) => row.password },
     { name: "Téléphone", selector: (row: Encadreur) => row.telephone },
     { name: "Role", selector: (row: Encadreur) => row.role },
     {

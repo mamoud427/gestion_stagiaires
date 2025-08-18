@@ -12,7 +12,8 @@ router.post("/superadmin", controller.createSuperAdmin.bind(controller));
 router.post("/register", controller.createEncadrant.bind(controller));
 // router.post("/register", authMiddleware(["SuperAdmin"]), controller.createEncadrant.bind(controller));
 router.post("/login", controller.login.bind(controller));
-router.get("/", authMiddleware(["SuperAdmin", "Admin"]),controller.getAllEncadrants.bind(controller));
+router.get("/", controller.getAllEncadrants.bind(controller));
+// router.get("/", authMiddleware(["SuperAdmin", "Admin"]),controller.getAllEncadrants.bind(controller));
 
 router.put("/:id", authMiddleware(["SuperAdmin", "Admin"]), controller.updateEncadrant.bind(controller));
 router.delete("/:id", authMiddleware(["SuperAdmin"]), controller.deleteEncadreur.bind(controller));

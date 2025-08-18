@@ -1,0 +1,96 @@
+
+dashboard-container {
+    padding: 20px;
+    flex: 1;
+    background-color: #f0f4f3;
+}
+h2{
+    padding: 20px;
+    font-size: 30px;
+    color:#333;
+}
+.stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+    margin: 30px;
+}
+.stat-card {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    color: #fff;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.stat-card h3 {
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+.stat-card p{
+    font-size: 23px;
+    font-weight: bold;
+    /* color: #1f4f49; */
+}
+
+.recent-activities table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #fff;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.recent-activities th, .recent-activities td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+}
+
+.recent-activities th {
+    background: #1f4f49;
+    color: #fff
+}
+
+/* Tablettes (max 1024px) */
+@media (max-width: 1024px) {
+  .cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .tables {
+    grid-template-columns: 1fr; /* Une seule colonne */
+  }
+}
+
+/* Mobiles (max 768px) */
+@media (max-width: 768px) {
+  .cards {
+    grid-template-columns: 1fr; /* Chaque carte prend toute la largeur */
+  }
+
+  .card {
+    padding: 15px;
+  }
+
+  .dashboard {
+    padding: 10px;
+  }
+}
+
+/* Très petits écrans (max 480px) */
+@media (max-width: 480px) {
+  .card h3 {
+    font-size: 16px;
+  }
+
+  .card p {
+    font-size: 14px;
+  }
+
+  .card .icon {
+    font-size: 24px;
+  }
+}

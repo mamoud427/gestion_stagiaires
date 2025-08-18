@@ -1,17 +1,25 @@
-/* La datatable */
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
+
+/* La datatable */
 .datatable{
-    padding: 0.5rem 5rem;
-    margin-left: 20px;
-    margin-right: 20px;   
+    padding: 0.5rem 2rem;
+    margin: 10px;
+    /* margin-right: 10px;  */
+    width: 100%;
+    
 }
 /* Les boutons des actions du tableaux */
 .btn-add{
-    width: 200px;
+    /* width: 200px; */
     align-items: center;
-    position: relative;
-    right: 0px;
-    left: 80%;
+    position: absolute;
+    right: 0;
+    /* left: 80%; */
 
 }
 
@@ -99,8 +107,8 @@
     width: 50px;
     align-items: center;
     position: relative;
-    left: 190px;
-    bottom: 40px;
+    left: 160px;
+    bottom: 25px;
 }
 .Boutonsdelete{
     display: flex;
@@ -112,11 +120,11 @@
     width: 50px;
     align-items: center;
     position: relative;
-    left: 550px;
+    left: 500px;
 }
 .infoModal .btnExit{
     width: 50px;
     align-items: center;
     position: relative;
-    left: 570px;
+    left: 500px;
 }

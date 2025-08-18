@@ -1,24 +1,18 @@
 import React, {useState} from "react";
 import '../style/login.css'; // Assuming you have a CSS file for styling
-// import axios from "axios";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { login } from "../services/authService";
 import {Mail, Lock, Eye, EyeOff} from "lucide-react";
 
 import Logo from "/logo.jpg";
 
 
-
-interface loginData {
-    email: string;
-    password: string
-}
-
-
 const Login: React.FC = () => {
-    const [formData, setFormData] = useState<loginData>({ email: "", password: "" });
+    const [formData, setFormData] = useState({ email: "", password: "" });
     const [showPassword, setShowPassword] = useState<boolean>(false);
-    // const [error, setError] = useState<string>("");
-    // const navigate = useNavigate();
+    const [error, setError] = useState<string>("");
+    const navigate = useNavigate();
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
@@ -27,6 +21,21 @@ const Login: React.FC = () => {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+        setError(""); // Reset error message
+        try {
+            const response = await login(formData);
+            if (response.token) {
+                // Redirection vers le tableau de bord après la connexion réussie
+                navigate("/dashboard");
+            }
+        } catch (err) {
+            // Vérification si l'erreur vient d'Axios
+            if (axios.isAxiosError(err)) {
+                setError(err.response?.data?.message || "Erreur lors de la connexion. Veuillez réessayer.");
+            } else {
+                setError("Une erreur inattendue est survenue.");
+            }
+        }
     
     }
 
@@ -34,7 +43,7 @@ const Login: React.FC = () => {
        <div className="login-container">
             <img src={Logo} alt="" />
             <h2>Authentification</h2>
-            {/* {error && <p className="error">{error}</p>} */}
+            {error && <p className="error">{error}</p>}
             <form onSubmit={handleSubmit}>
                 <label>Email :</label>
                 <div className="input-group">

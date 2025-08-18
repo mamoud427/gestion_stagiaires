@@ -69,15 +69,15 @@ export default function Stagiaires() {
   };
 
   // Ajouter
-  const handleAdd = async (data: Stagiaire) => {
-    try {
-      await api.post("/stagiaires", data);
-      setShowAddModal(false);
-      fetchStagiaires();
-    } catch (error) {
-      console.error("Erreur ajout", error);
-    }
-  };
+  // const handleAdd = async (data: Stagiaire) => {
+  //   try {
+  //     await api.post("/stagiaires", data);
+  //     setShowAddModal(false);
+  //     fetchStagiaires();
+  //   } catch (error) {
+  //     console.error("Erreur ajout", error);
+  //   }
+  // };
 
   // Modifier
   const handleEdit = async (data: Stagiaire) => {
@@ -159,127 +159,129 @@ export default function Stagiaires() {
   ];
 
   return (
-    <div className="datatable">
-      <div className="p-4">
-        <h2 className="text-2xl font-bold mb-4">Liste des stagiaires</h2>
+    <div className="container">
+       <div className="datatable">
+        <div className="p-4">
+          <h2 className="text-2xl font-bold mb-4">Liste des stagiaires</h2>
 
-        <button
-          onClick={() => setShowAddModal(true)}
-          className="btn-add mb-4 flex items-center gap-2 px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700"
-        >
-          <Plus size={16} /> Ajouter un stagiaire
-        </button>
+          <button
+            onClick={() => setShowAddModal(true)}
+            className="btn-add mb-4 flex items-center gap-2 px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700"
+          >
+            <Plus size={16} /> Ajouter un stagiaire
+          </button>
 
-        <div className="search mb-4">
-          <input
-            type="text"
-            placeholder="Rechercher un stagiaire"
-            onChange={handleChange}
+          <div className="search mb-4">
+            <input
+              type="text"
+              placeholder="Rechercher un stagiaire"
+              onChange={handleChange}
+            />
+          </div>
+
+          <DataTable
+            columns={columns}
+            data={records}
+            customStyles={customStyles}
+            pagination
+            highlightOnHover
+            noHeader
           />
         </div>
 
-        <DataTable
-          columns={columns}
-          data={records}
-          customStyles={customStyles}
-          pagination
-          highlightOnHover
-          noHeader
-        />
-      </div>
-
-      {/* Modal Ajouter */}
-      {showAddModal && (
-        <div className="addModal modal-overlay" onClick={() => setShowAddModal(false)}>
-          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-            <button
-              className="btnExit"
-              onClick={() => setShowAddModal(false)}
-              aria-label="Fermer"
-            >
-              ✕
-            </button>
-            <FormulaireAjout />
-          </div>
-        </div>
-      )}
-
-
-      {/* Modal Modifier */}
-      {showEditModal && selectedStagiaire && (
-        <div className="editModal modal-overlay" onClick={() => setShowEditModal(false)}>
-          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-            <button
-              className="btnExit"
-              onClick={() => setShowEditModal(false)}
-              aria-label="Fermer"
-            >
-              ✕
-            </button>
-            <FormulaireAjout
-              // ⬇ On passe l'objet du stagiaire sélectionné comme données initiales
-              initialData={selectedStagiaire}
-              // ⬇ On passe la fonction de mise à jour existante
-              onSubmit={handleEdit}
-              // ⬇ On passe la fonction pour fermer la modale
-              onClose={() => setShowEditModal(false)}
-            />
-          </div>
-        </div>
-      )}
-
-
-      {/* Modal Voir */}
-      {showViewModal && selectedStagiaire && (
-        <div className=" modal-overlay" onClick={() => setShowViewModal(false)}>
-          <div className="infoModal modal-content" onClick={(e) => e.stopPropagation()}>
-            <ModalStagiaire
-              stagiaire={selectedStagiaire}
-              onClose={() => {
-                setShowViewModal(false);
-                setSelectedStagiaire(null);
-              }}
-            />
-          </div>
-        </div>
-      )}
-
-      {/* Modal Supprimer */}
-      {showDeleteModal && selectedStagiaire && (
-        <div className="modal-overlay" onClick={() => setShowDeleteModal(false)}>
-          <div className="deleteModal" onClick={(e) => e.stopPropagation()}>
-            <button
-              className="btnExit"
-              onClick={() => setShowDeleteModal(false)}
-              aria-label="Fermer"
-            >
-              ✕
-            </button>
-            <h2>Suppression</h2>
-            <p className="mb-4">
-              Voulez-vous vraiment supprimer{" "}
-              <strong>
-                {selectedStagiaire.nom} {selectedStagiaire.prenom}
-              </strong>
-              ?
-            </p>
-            <div className="Boutonsdelete">
+        {/* Modal Ajouter */}
+        {showAddModal && (
+          <div className="addModal modal-overlay" onClick={() => setShowAddModal(false)}>
+            <div className="modal-content" onClick={(e) => e.stopPropagation()}>
               <button
-                onClick={handleDelete}
-                className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700"
+                className="btnExit"
+                onClick={() => setShowAddModal(false)}
+                aria-label="Fermer"
               >
-                Supprimer
+                ✕
               </button>
-              <button
-                onClick={() => setShowDeleteModal(false)}
-                className="bg-gray-300 px-4 py-2 rounded hover:bg-gray-400"
-              >
-                Annuler
-              </button>
+              <FormulaireAjout />
             </div>
           </div>
-        </div>
-      )}
+        )}
+
+
+        {/* Modal Modifier */}
+        {showEditModal && selectedStagiaire && (
+          <div className="editModal modal-overlay" onClick={() => setShowEditModal(false)}>
+            <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+              <button
+                className="btnExit"
+                onClick={() => setShowEditModal(false)}
+                aria-label="Fermer"
+              >
+                ✕
+              </button>
+              <FormulaireAjout
+                // ⬇ On passe l'objet du stagiaire sélectionné comme données initiales
+                initialData={selectedStagiaire}
+                // ⬇ On passe la fonction de mise à jour existante
+                onSubmit={handleEdit}
+                // ⬇ On passe la fonction pour fermer la modale
+                onClose={() => setShowEditModal(false)}
+              />
+            </div>
+          </div>
+        )}
+
+
+        {/* Modal Voir */}
+        {showViewModal && selectedStagiaire && (
+          <div className=" modal-overlay" onClick={() => setShowViewModal(false)}>
+            <div className="infoModal modal-content" onClick={(e) => e.stopPropagation()}>
+              <ModalStagiaire
+                stagiaire={selectedStagiaire}
+                onClose={() => {
+                  setShowViewModal(false);
+                  setSelectedStagiaire(null);
+                }}
+              />
+            </div>
+          </div>
+        )}
+
+        {/* Modal Supprimer */}
+        {showDeleteModal && selectedStagiaire && (
+          <div className="modal-overlay" onClick={() => setShowDeleteModal(false)}>
+            <div className="deleteModal" onClick={(e) => e.stopPropagation()}>
+              <button
+                className="btnExit"
+                onClick={() => setShowDeleteModal(false)}
+                aria-label="Fermer"
+              >
+                ✕
+              </button>
+              <h2>Suppression</h2>
+              <p className="mb-4">
+                Voulez-vous vraiment supprimer{" "}
+                <strong>
+                  {selectedStagiaire.nom} {selectedStagiaire.prenom}
+                </strong>
+                ?
+              </p>
+              <div className="Boutonsdelete">
+                <button
+                  onClick={handleDelete}
+                  className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700"
+                >
+                  Supprimer
+                </button>
+                <button
+                  onClick={() => setShowDeleteModal(false)}
+                  className="bg-gray-300 px-4 py-2 rounded hover:bg-gray-400"
+                >
+                  Annuler
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
     </div>
   );
 }

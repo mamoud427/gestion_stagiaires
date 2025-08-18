@@ -33,11 +33,11 @@ const Header: React.FC = () => {
         
         <div className="header-icons" >
             <button className="btn-icons" onClick = {() => setNotifications(prev => !prev)}>
-                <Bell size={24} className="icon" />
+                <Bell size={20} className="icon" />
                 <span className="notification-badge">3</span>
             </button>
             <button className="btn-icons">
-                <UserCircle size={24} className="icon" />
+                <UserCircle size={20} className="icon" />
                 
             </button>
             {/* <button className="logout-btn">

@@ -20,6 +20,7 @@ export class EncadrantController {
         try{
             const { email, password } = req.body;
             const result = await encadrantService.login(email, password);
+            // console.log("Login request body:", req.body);
             res.status(200).json(result);
         } catch (error: any) {
             res.status(400).json({ message: "Erreur lors de la connexion.", error: error.message });

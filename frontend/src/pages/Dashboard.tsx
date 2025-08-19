@@ -24,17 +24,17 @@ const Dashboard: React.FC = () => {
                     </div>
                     <div className="stat-card" style={styles.card2}>
                         <UserCog size={35}/>
-                        <h3>Nombre d'encadreurs actifs</h3>
+                        <h3>Nombre d'encadreurs</h3>
                         <p>8</p>
                     </div>
                     <div className="stat-card" style={styles.card3}>
                         <Clock size={35}/>
-                        <h3>Projets en cours</h3>
+                        <h3>Stages en cours</h3>
                         <p>5</p>
                     </div>
                     <div className="stat-card" style={styles.card4}>
                         <BadgeCheck size={35}/>
-                        <h3>Projets Terminés</h3>
+                        <h3>Stages Terminés</h3>
                         <p>10</p>
                     </div>
                 </section>

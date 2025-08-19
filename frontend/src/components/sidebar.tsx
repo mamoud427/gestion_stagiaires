@@ -7,7 +7,7 @@ import BtnLogout from './btnLogout';
 import '../style/sidebar.css';
 
 type Item = {
-    path: string;
+    path?: string;
     icon: React.ComponentType<{ size?: number; className?: string}>;
     label: string;
     category: "main" | "footer";
@@ -40,7 +40,6 @@ const items:Item [] = [
             category: 'main'
         },
         {
-            path: '/',
             component: BtnLogout,
             icon: LogOut,
             label: 'Se Déconnecter', 
@@ -72,21 +71,24 @@ const Sidebar: React.FC = () => {
                     <ul className='menu'>
                     {items
                         .filter(i => i.category === 'main')
-                        .map((item) =>{
+                        .map((item, index) =>{
                             const Icon = item.icon;
                             const isActive = location.pathname === item.path;
         
                             return (
-                                <Link
-                                    to={item.path}
-                                    key={item.path}
-                                    className={`menu-link ${isActive ? "active" : ""}`}
-                                >
-                                
-                                        <Icon size={18} className='menu-icon'/>
-                                        <span className='menu-label'>{item.label}</span>
-                                    
-                                </Link>
+                                <li key={item.label || index}>
+                                    {item.path ? (
+                                        <Link
+                                            to={item.path}
+                                            className={`menu-link ${isActive ? "active" : ""}`}
+                                        >
+                                            <Icon size={18} className='menu-icon'/>
+                                            <span className='menu-label'>{item.label}</span>
+                                        </Link>
+                                    ) : item.component ? (
+                                        <item.component />
+                                    ) : null}
+                                </li>
                             );
                         })
                     }
@@ -95,19 +97,23 @@ const Sidebar: React.FC = () => {
                 <div className="sidebar-footer">
                     {items
                         .filter(i => i.category === 'footer')
-                        .map((item) =>{
+                        .map((item, index) =>{
                             const Icon = item.icon;
                             const isActive = location.pathname === item.path;
         
                             return (
-                                <li
-                                    key={item.path}
-                                    className={`menu-item ${isActive ? "active" : ""}`}
-                                >
-                                    <Link to={item.path} className='menu-link'>
-                                        <Icon size={18} className='menu-icon'/>
-                                        <span className='menu-label'>{item.label}</span>
-                                    </Link>
+                                <li key={item.label || index}>
+                                    {item.path ? (
+                                        <Link
+                                            to={item.path}
+                                            className={`menu-link ${isActive ? "active" : ""}`}
+                                        >
+                                            <Icon size={18} className='menu-icon'/>
+                                            <span className='menu-label'>{item.label}</span>
+                                        </Link>
+                                    ) : item.component ? (
+                                        <item.component />
+                                    ) : null}
                                 </li>
                             );
                         })

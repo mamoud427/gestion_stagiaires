@@ -1,7 +1,7 @@
 import React from "react";
 
 interface Stagiaire {
-  _id: string;
+  _id?: string;
   nom: string;
   prenom: string;
   email: string;
@@ -9,7 +9,7 @@ interface Stagiaire {
   theme: string;
   dateDebut: string;
   dateFin: string;
-  encadrant: string;
+  encadrant?: string;
 }
 
 interface ModalProps {

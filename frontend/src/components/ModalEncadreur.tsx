@@ -1,13 +1,13 @@
 import React from "react";
 
 interface Encadreur {
-  _id: string;
+  // _id: string;
   nom: string;
   prenom: string;
   email: string;
   telephone: string;
   poste: string;
-  role: boolean;
+  role: string;
 }
 
 interface ModalProps {
@@ -17,15 +17,6 @@ interface ModalProps {
 
 const ModalEncadreur: React.FC<ModalProps> = ({ encadreur, onClose }) => {
   if (!encadreur) return null;
-
-  // const formatDate = (dateStr: string) => {
-  //   const d = new Date(dateStr);
-  //   if (isNaN(d.getTime())) return "-";
-  //   const day = d.getDate().toString().padStart(2, "0");
-  //   const month = (d.getMonth() + 1).toString().padStart(2, "0");
-  //   const year = d.getFullYear();
-  //   return `${day}/${month}/${year}`;
-  // };
 
   return (
     <div

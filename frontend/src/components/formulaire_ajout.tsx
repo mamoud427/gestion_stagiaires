@@ -1,13 +1,14 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect} from "react";
+import { encadreurService } from "../services/encadreurService";
 import '../style/form_ajout.css';
 
-interface StagiaireForm {
+export interface StagiaireForm {
+    _id?: string;
     nom: string;
     prenom: string;
     email: string;
-    dateNaissance: string;
-    telephone: string | number;
-    theme?: string;
+    telephone: string;
+    theme: string;
     dateDebut: string;
     dateFin: string;
     encadrant: string;
@@ -29,7 +30,6 @@ const FormulaireAjout: React.FC<FormulaireAjoutProps> = ({
             nom: "",
             prenom: "",
             email: "",
-            dateNaissance: "",
             telephone: "",
             theme: "",
             dateDebut: "",
@@ -41,10 +41,16 @@ const FormulaireAjout: React.FC<FormulaireAjoutProps> = ({
     const [encadrants, setEncadrants] = useState<{ id: number; nom: string }[]>([]);
 
     useEffect(() => {
-        fetch("http://localhost:5000/api/encadrants")
-            .then(res => res.json())
-            .then(data => setEncadrants(data))
-            .catch(err => console.error(err));
+        const fetchEncadreurs = async () => {
+            try {
+                const data = await encadreurService.getAll();
+                setEncadrants(data);    
+            } catch (error) {
+                console.log("erreur  du chargement ", error);
+            }
+        };
+
+        fetchEncadreurs();
     }, []);
 
     const handleChange = (
@@ -67,7 +73,7 @@ const FormulaireAjout: React.FC<FormulaireAjoutProps> = ({
         } else {
             // mode par défaut (ajout direct)
             try {
-                const response = await fetch("http://localhost:5000/api/stagiaires", {
+                const response = await fetch("http://localhost:5000/api/stagiaires/create", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify(stagiaire)
@@ -80,7 +86,6 @@ const FormulaireAjout: React.FC<FormulaireAjoutProps> = ({
                     nom: "",
                     prenom: "",
                     email: "",
-                    dateNaissance: "",
                     telephone: "",
                     theme: "",
                     dateDebut: "",
@@ -93,6 +98,7 @@ const FormulaireAjout: React.FC<FormulaireAjoutProps> = ({
                 console.error("Erreur lors de l'ajout du stagiaire:", error);
             }
         }
+        if (onClose) onClose();
     };
 
     return (
@@ -103,7 +109,6 @@ const FormulaireAjout: React.FC<FormulaireAjoutProps> = ({
                     { label: "Nom", name: "nom", type: "text" },
                     { label: "Prénom", name: "prenom", type: "text" },
                     { label: "Email", name: "email", type: "email" },
-                    { label: "Date de Naissance", name: "dateNaissance", type: "date" },
                     { label: "Téléphone", name: "telephone", type: "tel" },
                     { label: "Thème", name: "theme", type: "text" },
                     { label: "Date de Début", name: "dateDebut", type: "date" },

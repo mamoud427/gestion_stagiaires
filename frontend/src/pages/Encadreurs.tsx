@@ -1,21 +1,25 @@
 import React, { useEffect, useState } from "react";
 import DataTable from "react-data-table-component";
 import { Pen, Trash, Eye, Plus } from "lucide-react";
-import api from "../services/api";
-import "../style/liste_encadreur.css";
-import "../style/form_ajout.css";
+
+// Appel de la liaison API
+import { encadreurService } from "../services/encadreurService";
+
 import FormulaireAjout from "../components/formulaire_ajout_encadreur";
 import ModalEncadreur from "../components/ModalEncadreur";
 
+import "../style/liste_encadreur.css";
+import "../style/form_ajout.css";
+
 interface Encadreur {
-  _id: string;
+  _id?: string;
   nom: string;
   prenom: string;
   email: string;
   password: string;
   telephone: string;
   poste: string;
-  role: boolean;
+  role: string;
 }
 
 const customStyles = {
@@ -40,10 +44,10 @@ export default function Encadreurs() {
   const [selectedEncadreur, setSelectedEncadreur] = useState<Encadreur | null>(null);
 
   // Charger les Encadreurs
-  const fetchEncadreurs = async () => {
+const fetchEncadreurs = async () => {
     try {
-      const res = await api.get("/encadrant");
-      setEncadreurs(res.data);
+      const res = await encadreurService.getAll();
+      setEncadreurs(res);
     } catch (error) {
       console.error("Erreur fetch Encadreurs", error);
     }
@@ -69,9 +73,10 @@ export default function Encadreurs() {
 
   // Modifier
   const handleEdit = async (data: Encadreur) => {
-    if (!selectedEncadreur) return;
+    if (!selectedEncadreur?._id) return;
     try {
-      await api.put(`/encadrant/${selectedEncadreur._id}`, data);
+      const result = await encadreurService.update(selectedEncadreur._id, data);
+      if (result) alert("Encadreur modifié avec succès");
       setShowEditModal(false);
       setSelectedEncadreur(null);
       fetchEncadreurs();
@@ -82,9 +87,10 @@ export default function Encadreurs() {
 
   // Supprimer
   const handleDelete = async () => {
-    if (!selectedEncadreur) return;
+    if (!selectedEncadreur?._id) return;
     try {
-      await api.delete(`/encadrant/${selectedEncadreur._id}`);
+      const result = await encadreurService.delete(selectedEncadreur._id);
+      if (result) alert("Encadreur supprimé avec succès");
       setShowDeleteModal(false);
       setSelectedEncadreur(null);
       fetchEncadreurs();
@@ -181,7 +187,11 @@ export default function Encadreurs() {
             >
               ✕
             </button>
-            <FormulaireAjout />
+            <FormulaireAjout 
+               onClose={() => {
+                fetchEncadreurs();
+              }}
+            />
           </div>
         </div>
       )}

@@ -1,15 +1,19 @@
 import React, { useEffect, useState } from "react";
 import DataTable from "react-data-table-component";
 import { Pen, Trash, Eye, Plus } from "lucide-react";
-import api from "../services/api";
-import "../style/liste.css";
-import "../style/form_ajout.css";
 import { format } from "date-fns";
+
 import FormulaireAjout from "../components/formulaire_ajout";
 import ModalStagiaire from "../components/ModalStagiaires";
 
+// Appel de la liaison API
+import { stagiaireService } from "../services/stagiaireService";
+
+import "../style/liste.css";
+import "../style/form_ajout.css";
+
 interface Stagiaire {
-  _id: string;
+  _id?: string;
   nom: string;
   prenom: string;
   email: string;
@@ -44,8 +48,8 @@ export default function Stagiaires() {
   // Charger les stagiaires
   const fetchStagiaires = async () => {
     try {
-      const res = await api.get("/stagiaires");
-      setStagiaires(res.data);
+      const res = await stagiaireService.getAll();
+      setStagiaires(res);
     } catch (error) {
       console.error("Erreur fetch stagiaires", error);
     }
@@ -69,9 +73,12 @@ export default function Stagiaires() {
   };
 
   // Ajouter
-  // const handleAdd = async (data: Stagiaire) => {
+  // const handleAdd = async (data: StagiaireF) => {
   //   try {
-  //     await api.post("/stagiaires", data);
+  //     await stagiaireService.create(data);
+  //     alert("Stagiaire ajouté avec succès");
+  //     setShowAddModal(false);
+  //     fetchStagiaires();
   //     setShowAddModal(false);
   //     fetchStagiaires();
   //   } catch (error) {
@@ -81,9 +88,10 @@ export default function Stagiaires() {
 
   // Modifier
   const handleEdit = async (data: Stagiaire) => {
-    if (!selectedStagiaire) return;
+    if (!selectedStagiaire?._id) return;
     try {
-      await api.put(`/stagiaires/${selectedStagiaire._id}`, data);
+      const result = await stagiaireService.update(selectedStagiaire._id, data);
+      if (result) alert("Stagiaire modifié avec succès");
       setShowEditModal(false);
       setSelectedStagiaire(null);
       fetchStagiaires();
@@ -94,9 +102,10 @@ export default function Stagiaires() {
 
   // Supprimer
   const handleDelete = async () => {
-    if (!selectedStagiaire) return;
+    if (!selectedStagiaire?._id) return;
     try {
-      await api.delete(`/stagiaires/${selectedStagiaire._id}`);
+      const result = await stagiaireService.delete(selectedStagiaire._id);
+      if (result) alert("Stagiaire supprimé avec succès");
       setShowDeleteModal(false);
       setSelectedStagiaire(null);
       fetchStagiaires();
@@ -200,7 +209,12 @@ export default function Stagiaires() {
               >
                 ✕
               </button>
-              <FormulaireAjout />
+              <FormulaireAjout  
+                // onSubmit={fetchStagiaires}
+                 onClose={() => {
+                  fetchStagiaires();
+                }}
+              />
             </div>
           </div>
         )}

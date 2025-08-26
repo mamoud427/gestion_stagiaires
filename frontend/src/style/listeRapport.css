@@ -1,0 +1,50 @@
+.rapport-container {
+  flex: 1;
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0px 2px 5px rgba(0,0,0,0.1);}
+
+.title {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 16px;
+}
+
+.list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.item {
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.nom {
+  font-weight: 600;
+  margin: 0;
+}
+
+.date {
+  font-size: 14px;
+  color: #6b7280; /* gris doux */
+  margin: 2px 0 0 0;
+}
+
+.link {
+  color: #2563eb; /* bleu */
+  text-decoration: underline;
+  font-weight: 500;
+  transition: color 0.2s ease-in-out;
+}
+
+.link:hover {
+  color: #1e40af; /* bleu foncé au survol */
+}

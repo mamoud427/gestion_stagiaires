@@ -53,7 +53,7 @@ const Sidebar: React.FC = () => {
 
     // par défaut fermé sur mobile, ouvert sinon
     useEffect(() =>{
-        if (window.innerWidth < 768) setOpen(false);
+        if (window.innerWidth > 768) setOpen(false);
     }, []);
 
     return (

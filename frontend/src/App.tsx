@@ -1,4 +1,4 @@
-import React from 'react';
+// import React from 'react';
 import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
 
 import FormulaireAjout from './components/formulaire_ajout';
@@ -10,6 +10,7 @@ import Encadreurs from './pages/Encadreurs';
 import Stagiaires from './pages/Stagiaires';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
+import Rapports from './pages/Rapports';
 // import './App.css'
 
 function App() {
@@ -24,6 +25,7 @@ function App() {
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/liste_stagiaires" element={<Stagiaires />} />
             <Route path="/liste_encadreurs" element={<Encadreurs />} />
+            <Route path="/rapports" element={<Rapports />} />
             <Route path="/ajouter" element={<FormulaireAjout />} />
             <Route path="/ajouter_encadrant" element={<FormulaireAjoutEncadrant />} />
           </Route>

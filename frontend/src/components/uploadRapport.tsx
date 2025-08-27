@@ -1,11 +1,16 @@
 import React, { useCallback, useState, useEffect } from "react";
 import { useDropzone } from "react-dropzone";
 import { stagiaireService } from "../services/stagiaireService";
+import axios from 'axios';
 
 import { UploadCloud, File } from 'lucide-react';
 import "../style/upload.css";
 
-const UploadRapport: React.FC = () => {
+interface UploadRapportProps {
+  stagiaireId?: string;
+}
+
+const UploadRapport: React.FC<UploadRapportProps> = () => {
   const [file, setFile] = useState<File | null>(null);
   const [stagiaireId, setStagiaireId] = useState("");
   const [stagiaire, setStagiaire] = useState<{ _id: number; nom: string; prenom: string }[]>([]);
@@ -19,15 +24,12 @@ const UploadRapport: React.FC = () => {
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 
-  // const handleChange = (
-  //       e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
-  //   ) => {
-  //       const { name, value } = e.target;
-  //       setStagiaire(prev => ({
-  //           ...prev,
-  //           [name]: value,
-  //       }));
-  //   };
+
+  // const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   if (e.target.files && e.target.files[0]) {
+  //     setFile(e.target.files[0]);
+  //   }
+  // };
 
   const handleUpload = async () => {
     if (!file || !stagiaire) {
@@ -36,8 +38,26 @@ const UploadRapport: React.FC = () => {
     }
 
     const formData = new FormData();
-    formData.append("rapport", file);
+    formData.append("file", file);
     // formData.append("stagiaireNom");
+
+    //  pour la récuperation des rapports
+    try {
+     await axios.post(
+      `http://localhost:5000/api/rapports/${stagiaireId}/upload`,
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+
+    setMessage("Upload de rapport réussi ");
+  } catch (error) {
+    console.error(error);
+    setMessage("Erreur lors de l'upload");
+  }
 
 
   };
@@ -47,6 +67,7 @@ const UploadRapport: React.FC = () => {
       try {
         const res = await stagiaireService.getAll()
         setStagiaire(res); // stocke les stagiaires pour le select
+
       } catch (err) {
         console.error("Erreur fetch stagiaires", err);
       }

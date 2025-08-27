@@ -100,7 +100,7 @@ const fetchEncadreurs = async () => {
   };
 
   const columns = [
-    { name: "N°", cell: (row: Encadreur, index: number) => index + 1, sortable: true },
+    { name: "N°", cell: (_: Encadreur, index: number) => index + 1, sortable: true },
     { name: "Nom", selector: (row: Encadreur) => row.nom, sortable: true },
     { name: "Prénom", selector: (row: Encadreur) => row.prenom, sortable: true },
     { name: "Email", selector: (row: Encadreur) => row.email },

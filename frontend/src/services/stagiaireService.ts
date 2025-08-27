@@ -10,6 +10,7 @@ export interface Stagiaire {
     dateDebut: string;
     dateFin: string;
     encadrant: string;
+    statut?: "en_cours" | "termine";
 }
 
 export const stagiaireService = {

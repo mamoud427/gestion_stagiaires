@@ -22,6 +22,7 @@ interface Stagiaire {
   dateDebut: string;
   dateFin: string;
   encadrant: string;
+  statut?: "en_cours" | "termine";
 }
 
 const customStyles = {
@@ -72,20 +73,6 @@ export default function Stagiaires() {
     setRecords(filtered);
   };
 
-  // Ajouter
-  // const handleAdd = async (data: StagiaireF) => {
-  //   try {
-  //     await stagiaireService.create(data);
-  //     alert("Stagiaire ajouté avec succès");
-  //     setShowAddModal(false);
-  //     fetchStagiaires();
-  //     setShowAddModal(false);
-  //     fetchStagiaires();
-  //   } catch (error) {
-  //     console.error("Erreur ajout", error);
-  //   }
-  // };
-
   // Modifier
   const handleEdit = async (data: Stagiaire) => {
     if (!selectedStagiaire?._id) return;
@@ -115,7 +102,7 @@ export default function Stagiaires() {
   };
 
   const columns = [
-    { name: "N°", cell: (row: Stagiaire, index: number) => index + 1, sortable: true },
+    { name: "N°", cell: (_: Stagiaire, index: number) => index + 1, sortable: true },
     { name: "Nom", selector: (row: Stagiaire) => row.nom, sortable: true },
     { name: "Prénom", selector: (row: Stagiaire) => row.prenom, sortable: true },
     { name: "Email", selector: (row: Stagiaire) => row.email },
@@ -127,7 +114,11 @@ export default function Stagiaires() {
       name: "Date fin",
       cell: (row: Stagiaire) => format(new Date(row.dateFin), "dd/MM/yyyy"),
     },
-
+    { name: "Statut", cell: (row: Stagiaire) => (
+      <span className={`badge ${row.statut}`}>
+        {row.statut === "en_cours" ? "En cours" : "Terminé"}
+      </span>
+    ) },
     {
       name: "Actions",
       cell: (row: Stagiaire) => (

@@ -68,6 +68,24 @@
     color: rgb(25, 160, 25);
 }
 
+.badge {
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: bold;
+  color: #fff;
+  display: inline-block;
+  text-align: center;
+}
+
+.badge.en_cours {
+  background-color: #e74c3c; /* rouge */
+}
+
+.badge.termine {
+  background-color: #27ae60; /* vert */
+}
+
 /* pour ls modals */
 /* modal d'ajout */
 /* Fond sombre qui couvre tout l'écran */

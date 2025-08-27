@@ -111,7 +111,7 @@ const FormulaireAjout: React.FC<FormulaireAjoutProps> = ({
         required
       >
         <option value="">-- Sélectionner un rôle --</option>
-        <option value="SuperAdmin">Super Admin</option>
+        {/* <option value="SuperAdmin">Super Admin</option> */}
         <option value="Admin">Admin</option>
         <option value="Encadreur">Encadreur</option>
       </select>

@@ -7,16 +7,25 @@ interface Rapport {
   _id: string;
   stagiaire: { nom: string; prenom: string }; // à adapter selon ton modèle
   filename: string;
-  createdAt: string;
+  uploadDate: string;
 }
 
 const ListeRapports: React.FC = () => {
   const [rapports, setRapports] = useState<Rapport[]>([]);
+  // const [loading, setLoading] = useState<boolean>(true);
+  // const [error, setError] = useState<string>("");
 
   useEffect(() => {
     const fetchRapports = async () => {
-      const res = await axios.get("http://localhost:5000/api/rapports");
-      setRapports(res.data);
+      try {
+        const res = await axios.get<Rapport[]>(
+          "http://localhost:5000/api/rapports"
+        );
+        setRapports(res.data);
+        // console.log(res.data)
+      } catch (err) {
+        console.error("Impossible de récupérer les rapports." + err);
+      }
     };
     fetchRapports();
   }, []);
@@ -24,109 +33,20 @@ const ListeRapports: React.FC = () => {
   return (
     <div className="rapport-container">
       <h2 className="title">Liste des rapports</h2>
-{/* 
       {rapports.length === 0 ? (
         <p>Aucun rapport disponible.</p>
-      ) : ( */}
+      ) : (
         <ul className="list">
-            <li
-              // key={rapport._id}
-              className="item"
-            >
-              <div>
-                <p className="nom">
-                  <span>Rapport de stage de </span>Mamoud bao
-                </p>
-                <p className="date">
-                  08/02/2024
-                </p>
-              </div>
-              <a
-                className="link"
-              >
-                Télécharger
-              </a>
-            </li><li
-              // key={rapport._id}
-              className="item"
-            >
-              <div>
-                <p className="nom">
-                  <span>Rapport de stage de </span>Mamoud bao
-                </p>
-                <p className="date">
-                  08/02/2024
-                </p>
-              </div>
-              <a
-                className="link"
-              >
-                Télécharger
-              </a>
-            </li><li
-              // key={rapport._id}
-              className="item"
-            >
-              <div>
-                <p className="nom">
-                  <span>Rapport de stage de </span>Mamoud bao
-                </p>
-                <p className="date">
-                  08/02/2024
-                </p>
-              </div>
-              <a
-                className="link"
-              >
-                Télécharger
-              </a>
-            </li><li
-              // key={rapport._id}
-              className="item"
-            >
-              <div>
-                <p className="nom">
-                  <span>Rapport de stage de </span>Mamoud bao
-                </p>
-                <p className="date">
-                  08/02/2024
-                </p>
-              </div>
-              <a
-                className="link"
-              >
-                Télécharger
-              </a>
-            </li><li
-              // key={rapport._id}
-              className="item"
-            >
-              <div>
-                <p className="nom">
-                  <span>Rapport de stage de </span>Mamoud bao
-                </p>
-                <p className="date">
-                  08/02/2024
-                </p>
-              </div>
-              <a
-                className="link"
-              >
-                Télécharger
-              </a>
-            </li>
           {rapports.map((rapport) => (
-            <li
-              key={rapport._id}
-              className="item"
-            >
+            <li key={rapport._id} className="item">
               <div>
                 <p className="nom">
                   <span>Rapport de stage de </span>
-                  {rapport.stagiaire?.nom} {rapport.stagiaire?.prenom}
+                  {rapport.stagiaire?.nom ?? "Inconnu"}{" "}
+                  {rapport.stagiaire?.prenom ?? ""}
                 </p>
                 <p className="date">
-                  {new Date(rapport.createdAt).toLocaleDateString()}
+                  {new Date(rapport.uploadDate).toLocaleDateString("fr-FR")}
                 </p>
               </div>
               <a
@@ -138,7 +58,7 @@ const ListeRapports: React.FC = () => {
             </li>
           ))}
         </ul>
-      {/* )} */}
+      )}
     </div>
   );
 };

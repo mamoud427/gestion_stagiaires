@@ -1,4 +1,4 @@
-import mongoose, {Document, Schema} from "mongoose";
+import mongoose, {Document, model, Schema, Types} from "mongoose";
 
 // interface Typescript d'un stagiaire
 export interface IStagiaire extends  Document {
@@ -10,8 +10,10 @@ export interface IStagiaire extends  Document {
     dateDebut: Date,
     dateFin: Date,
     encadrant: String,
-    createAt?: Date;
-    updatedAt?: Date;
+    rapportId?: mongoose.Types.ObjectId;
+    statut: String,
+    createAt?: Date,
+    updatedAt?: Date,
 }
 
 // Schema Mongoose d'un stagiaire
@@ -24,7 +26,9 @@ const StagiaireSchema: Schema<IStagiaire> = new Schema(
         theme: {type: String, required: true},
         dateDebut: {type: Date, required: true},
         dateFin: {type: Date, required: true},
-        encadrant: {type: String, required: true}
+        encadrant: {type: String, required: true},
+        statut: {type: String, enum: ["en_cours","termine"], default: "en_cours"},
+        rapportId: { type: Schema.Types.ObjectId } // GridFS stocke l’ID du fichier
     },
     {
         timestamps: true

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import DataTable from "react-data-table-component";
-import { Pen, Trash, Eye, Plus } from "lucide-react";
+import { Pen, Trash, Eye, Plus, DownloadIcon } from "lucide-react";
 import { format } from "date-fns";
 
 import FormulaireAjout from "../components/formulaire_ajout";
@@ -56,6 +56,7 @@ export default function Stagiaires() {
     }
   };
 
+  
   useEffect(() => {
     fetchStagiaires();
   }, []);
@@ -100,6 +101,13 @@ export default function Stagiaires() {
       console.error("Erreur suppression", error);
     }
   };
+
+  // Imprimer l'attestation
+  const handleDownload = (id: string) => {
+    if (!selectedStagiaire?._id) return;
+    window.open(`http://localhost:5000/api/attestations/${id}/pdf`, "_blank");
+  };
+
 
   const columns = [
     { name: "N°", cell: (_: Stagiaire, index: number) => index + 1, sortable: true },
@@ -152,6 +160,13 @@ export default function Stagiaires() {
             title="Supprimer"
           >
             <Trash size={20} />
+          </span>
+          <span
+            onClick={() => {
+              if(row._id) handleDownload(row._id);
+            }}
+          >
+            <DownloadIcon size={20} />
           </span>
         </div>
       ),

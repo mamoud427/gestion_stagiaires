@@ -2,6 +2,7 @@ import React from "react";
 
 import ListeRapports from "../components/listeRapport";
 import UploadRapport from "../components/uploadRapport";
+// import PreviewAttestation from "../components/previewAttestation";
 
 import "../style/rapport.css";
 
@@ -11,6 +12,8 @@ const Rapports: React.FC = () => {
         <div style={styles.style}>
             <ListeRapports />
             <UploadRapport />
+            {/* <PreviewAttestation /> */}
+
         </div>
     );
 }

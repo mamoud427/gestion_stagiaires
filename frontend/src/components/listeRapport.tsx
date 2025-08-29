@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+// import { PreviewAttestation} from "./previewAttestation";
 
 import "../style/listeRapport.css";
 
@@ -12,8 +13,10 @@ interface Rapport {
 
 const ListeRapports: React.FC = () => {
   const [rapports, setRapports] = useState<Rapport[]>([]);
-  // const [loading, setLoading] = useState<boolean>(true);
-  // const [error, setError] = useState<string>("");
+
+  const handleDownload = (id: string) => {
+    window.open(`http://localhost:5000/api/attestations/${id}/pdf`, "_blank");
+  };
 
   useEffect(() => {
     const fetchRapports = async () => {
@@ -49,12 +52,13 @@ const ListeRapports: React.FC = () => {
                   {new Date(rapport.uploadDate).toLocaleDateString("fr-FR")}
                 </p>
               </div>
-              <a
-                href={`http://localhost:5000/api/rapports/${rapport._id}/download`}
+              <button
+                // href={`http://localhost:5000/api/rapports/${rapport._id}/download`}
                 className="link"
+                onClick={() => handleDownload(rapport._id)}
               >
                 Télécharger
-              </a>
+              </button>
             </li>
           ))}
         </ul>

@@ -10,6 +10,7 @@ import cors from "cors";
 import stagiaireRoutes from "./routes/Stagiaire.routes";
 import encadrantRoutes from "./routes/Encadrant.routes";
 import rapportRoutes from "./routes/Rapport.routes";
+import attestationRoutes from "./routes/Pdf.routes";
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -25,6 +26,7 @@ app.use(express.json());
 app.use('/api/stagiaires', stagiaireRoutes);
 app.use('/api/encadrant', encadrantRoutes);
 app.use("/api/rapports", rapportRoutes);
+app.use("/api/attestations", attestationRoutes);
 
 // routes de test
 app.get("/", (req, res) => {

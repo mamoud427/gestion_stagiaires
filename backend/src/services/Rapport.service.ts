@@ -1,7 +1,6 @@
 // services/rapportService.ts
 import mongoose from "mongoose";
 import { GridFSBucket } from "mongodb";
-import { Request, Response } from "express";
 import { StagiaireModel } from "../models/Stagiaire.model";
 import { Readable } from "stream";
 
@@ -45,7 +44,7 @@ export class RapportService {
     try {
         const db = mongoose.connection.db;
         const files = await db!.collection("rapports.files").find().toArray();
-// console.log("Fichiers GridFS:", files);
+        
         // Associer les fichiers aux stagiaires
         const rapports = await Promise.all(
         files.map(async (file) => {

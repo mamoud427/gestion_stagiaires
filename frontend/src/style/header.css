@@ -2,10 +2,10 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #0288d1;
+  background-color: #1f4f49ee;
   color: #ffffff;
   padding: 0 10px;
-  height: 70px;
+  height: 80px;
   flex-wrap: wrap;
   gap: 10px;
 }
@@ -35,7 +35,7 @@
   margin-top: -2px;
 }
 
-.icon-btn {
+.btn-icons{
   background: none;
   border: none;
   color: white;
@@ -46,7 +46,7 @@
 
 .notification-badge {
   position: absolute;
-  top: 22px;
+  top: 3px;
   background: red;
   color: white;
   border-radius: 50%;

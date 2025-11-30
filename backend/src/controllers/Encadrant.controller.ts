@@ -23,7 +23,9 @@ export class EncadrantController {
             // console.log("Login request body:", req.body);
             res.status(200).json(result);
         } catch (error: any) {
-            res.status(400).json({ message: "Erreur lors de la connexion.", error: error.message });
+            // console.log("Login request body:", req.body);
+
+            res.status(400).json({ message: "Erreur lors de la connexion...", error: error.message });
         }
     }
 

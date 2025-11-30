@@ -21,8 +21,15 @@ export class EncadrantService {
         const encadrant = await EncadrantModel.findOne({ email});
         if (!encadrant) throw new Error("Encadreur non trouvé.");
 
+// console.log("✅ Encadrant trouvé:", encadrant.email);
+//     console.log("🔐 Mot de passe en base (hashé):", encadrant.password);
+
+//     // Test direct du hash
+//     const testHash = await bcrypt.hash(password, 10);
+//     console.log("🧪 Nouveau hash généré à partir du mot de passe reçu:", testHash);
         const isMatch = await bcrypt.compare(password, encadrant.password);
         if (!isMatch) throw new Error("Mot de passe incorrect.");
+        // console.log("🧩 Résultat de bcrypt.compare:", isMatch);
 
         const token = jwt.sign(
             { id: encadrant._id, role: encadrant.role},

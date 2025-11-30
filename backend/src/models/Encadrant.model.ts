@@ -25,12 +25,21 @@ const EncadrantSchema = new Schema<IEncadrant>({
 });
 
 //  Hash du mot de passe sauvegardé
+// EncadrantSchema.pre<IEncadrant>('save', async function(next) {
+//     if(!this.isModified('password')) return next();
+//     const salt = await bcrypt.genSalt(10);
+//     this.password = await bcrypt.hash(this.password, salt);
+//     next();
+// });
 EncadrantSchema.pre<IEncadrant>('save', async function(next) {
-    if(!this.isModified('password')) return next();
-    const salt = await bcrypt.genSalt(10);
-    this.password = await bcrypt.hash(this.password, salt);
-    next();
+  if (!this.isModified('password')) return next();
+  // si le password commence par $2 (probablement déjà haché), on skip
+  if (typeof this.password === 'string' && this.password.startsWith("$2")) return next();
+  const salt = await bcrypt.genSalt(10);
+  this.password = await bcrypt.hash(this.password, salt);
+  next();
 });
+
 
 //  Fonction pour comparer le mot de passe
 EncadrantSchema.methods.comparePassword = async function (candidatePassword: string): Promise<boolean> {

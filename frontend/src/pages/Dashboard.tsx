@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     Users,
     UserCog,
@@ -7,8 +7,36 @@ import {
 
 } from 'lucide-react';
 import "../style/dashboard.css";
+import { dashboardService} from '../services/dashboardService';
+import type { DashboardStats } from '../services/dashboardService';
+import CountUp from 'react-countup';
 
 const Dashboard: React.FC = () => {
+
+    const [stats, setStats] = useState<DashboardStats>({
+        nbreStagiaire: 0,
+        nbreEncadrant: 0,
+        stageEnCours: 0,
+        stageTermine: 0
+    });
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+    const fetchStats = async () => {
+      try {
+        const data = await dashboardService.getStats();
+        setStats(data);
+      } catch (error) {
+        console.error("Erreur lors du chargement des stats", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchStats();
+    }, []);
+
+    if (loading) return <p>Chargement des statistiques...</p>;
 
     return(
         <>            
@@ -19,23 +47,23 @@ const Dashboard: React.FC = () => {
                     
                     <div className="stat-card" style={styles.card1}>
                         <Users size={35}/>
-                        <h3>Total de Stagiaire</h3>
-                        <p>120</p>
+                        <h3>Total de Stagiaires</h3>
+                        <p><CountUp end={stats.nbreStagiaire} duration={2} /></p>
                     </div>
                     <div className="stat-card" style={styles.card2}>
                         <UserCog size={35}/>
                         <h3>Nombre d'encadreurs</h3>
-                        <p>8</p>
+                        <p><CountUp end={stats.nbreEncadrant} duration={2} /></p>
                     </div>
                     <div className="stat-card" style={styles.card3}>
                         <Clock size={35}/>
                         <h3>Stages en cours</h3>
-                        <p>5</p>
+                        <p><CountUp end={stats.stageEnCours} duration={2} /></p>
                     </div>
                     <div className="stat-card" style={styles.card4}>
                         <BadgeCheck size={35}/>
                         <h3>Stages Terminés</h3>
-                        <p>10</p>
+                        <p><CountUp end={stats.stageTermine} duration={2} /></p>
                     </div>
                 </section>
 

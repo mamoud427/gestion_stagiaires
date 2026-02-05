@@ -24,13 +24,6 @@ const EncadrantSchema = new Schema<IEncadrant>({
     timestamps: true
 });
 
-//  Hash du mot de passe sauvegardé
-// EncadrantSchema.pre<IEncadrant>('save', async function(next) {
-//     if(!this.isModified('password')) return next();
-//     const salt = await bcrypt.genSalt(10);
-//     this.password = await bcrypt.hash(this.password, salt);
-//     next();
-// });
 EncadrantSchema.pre<IEncadrant>('save', async function(next) {
   if (!this.isModified('password')) return next();
   // si le password commence par $2 (probablement déjà haché), on skip

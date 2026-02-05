@@ -1,6 +1,8 @@
 import { Router } from "express";
 import { EncadrantModel } from "../models/Encadrant.model";
 import { StagiaireModel } from "../models/Stagiaire.model";
+import { AuditLogController } from "../controllers/Audit.controller";
+import { authMiddleware } from "../Middleware/auth.middleware";
 
 const router = Router();
 
@@ -22,5 +24,13 @@ router.get('/stats', async (req, res) => {
         res.status(500).json({message : "Erreur lors de la recuperation des statistiques."});
     }
 });
+
+/*
+* route pour la journalisation seulement pour le super admin
+*/
+router.get('/audit-Logs', 
+    authMiddleware(['SuperAdmin']),
+    AuditLogController.getAll 
+);
 
 export default router;
